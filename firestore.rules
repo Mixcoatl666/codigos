@@ -1,0 +1,10 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Cierra todo acceso hasta conectar una identidad y reglas por usuario.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
