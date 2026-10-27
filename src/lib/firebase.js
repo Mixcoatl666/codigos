@@ -19,8 +19,15 @@ if (!firebaseConfigured) {
   console.info(`Firebase aún no está configurado. Faltan: ${missingConfig.join(', ')}. Completa .env.local y reinicia Vite.`)
 }
 
-export const firebaseApp = firebaseConfigured
-  ? (getApps().length ? getApp() : initializeApp(firebaseConfig))
-  : null
+let firebaseAppInstance = null
 
+if (firebaseConfigured) {
+  if (getApps().length > 0) {
+    firebaseAppInstance = getApp()
+  } else {
+    firebaseAppInstance = initializeApp(firebaseConfig)
+  }
+}
+
+export const firebaseApp = firebaseAppInstance
 export const db = firebaseApp ? getFirestore(firebaseApp) : null
